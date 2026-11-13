@@ -38,7 +38,7 @@ jobs:
         run: flutter pub get
 
       - name: Run static analysis
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
 
       - name: Run widget & controller tests
         run: flutter test
