@@ -61,7 +61,7 @@ class _FakeVpnBridge implements VpnBridge {
     });
   }
 
-  void close() => _events.close();
+  Future<void> close() => _events.close();
 }
 
 void main() {
@@ -90,29 +90,35 @@ void main() {
     expect(find.text('Best performance'), findsOneWidget);
 
     await tester.tap(find.text('Best performance'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('Server Region'), findsOneWidget);
     expect(find.text('49 countries'), findsOneWidget);
 
     await tester.enterText(find.byType(TextField), 'Germany');
-    await tester.pumpAndSettle();
+    await tester.pump();
     await tester.tap(find.text('Germany'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(controller.selectedRegion, 'DE');
     expect(find.text('Germany'), findsOneWidget);
 
     await controller.toggleConnection();
     await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
 
     expect(bridge.lastStartedRegion, 'DE');
     expect(find.text('Protected in Germany'), findsOneWidget);
 
     await controller.selectRegion('JP');
+    await tester.pump();
     expect(bridge.lastRestartedRegion, 'JP');
 
-    bridge.close();
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+    await bridge.close();
     controller.dispose();
   });
 }
