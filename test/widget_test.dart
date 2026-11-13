@@ -98,7 +98,7 @@ void main() {
 
     await tester.enterText(find.byType(TextField), 'Germany');
     await tester.pump();
-    await tester.tap(find.text('Germany'));
+    await tester.tap(find.widgetWithText(InkWell, 'Germany'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
