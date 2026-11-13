@@ -1,0 +1,4 @@
+-keep class ca.psiphon.** { *; }
+-keep class psi.** { *; }
+-keep class go.** { *; }
+-keep class ca.psiphon.flutter.** { *; }
